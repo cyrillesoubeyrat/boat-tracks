@@ -1,0 +1,298 @@
+@import "node_modules/ol/ol.css";
+
+@import "src/gui/gui.css";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  --base-clr: #11121a;
+  --line-clr: #42434a;
+  --hover-clr: #222533;
+  --text-clr: #e6e6ef;
+  --accent-clr: #5e63ff;
+  --transparent-color: rgba(128, 128, 128, 0);
+  --secondary-text-clr: #b0b3c1;
+  --closed-sidebar-width: 60px;
+  --opened-sidebar-width: 250px;
+  --icons-hover-color: #0c0c11;
+  --icons-width: 24px;
+  --icons-container-background-color: rgba(50, 50, 50, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Poppins, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.5rem;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--base-clr);
+  color: var(--text-clr);
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+
+/******************************/
+/* Attributes of the sidebar: */
+/******************************/
+#sidebar {
+  box-sizing: border-box;
+  height: 100vh;
+  width: var(--opened-sidebar-width);
+  padding: 5px 1em;
+  background-color: var(--base-clr);
+  border-right: 1px solid var(--line-clr);
+
+  position: sticky; /* For anchoring the sidebar regardless of scrolling in main window */
+  top: 0;
+  align-self: start;
+  transition: 300ms ease-in-out;
+  overflow: hidden;
+  text-wrap: nowrap;
+}
+
+#sidebar.closed {
+  padding: 5px;
+  width: var(--closed-sidebar-width);
+}
+
+/************************************/
+/* Attributes of the sidebar items: */
+/************************************/
+#sidebar ul {
+  /* Remove list bullet points in sidebar */
+  list-style: none;
+}
+
+#sidebar>ul>li:first-child {
+  /* Logo display */
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+
+  .logo {
+    font-size: 1.5em;
+    font-weight: 700;
+  }
+}
+
+#sidebar ul li.selected {
+  color: var(--accent-clr);
+
+  svg {
+    fill: var(--accent-clr);
+  }
+}
+
+#sidebar a,
+#sidebar .dropdown-btn,
+#sidebar .logo {
+  border-radius: .5em;
+  padding: .85em;
+  text-decoration: none;
+  color: var(--text-clr);
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.dropdown-btn {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* For dropdown buttons, override default display attributes
+for allowing to show and hide them:
+- hidden by default
+- displayed when belonging to "show" class */
+#sidebar .dropdown-btn {
+  display: none;
+}
+#sidebar .dropdown-btn.show {
+  display: flex;
+}
+
+#sidebar svg {
+  /* Prevent icons from distorsion: */
+  flex-shrink: 0;
+  fill: var(--text-clr);
+}
+
+/* For text of links and dropdown buttons: */
+#sidebar a span,
+#sidebar .dropdown-btn span {
+  /* Make sure these items fill full parent's area */
+  /* Arrows of dropdowns are pushed to right side */
+  flex-grow: 1;
+}
+
+#sidebar a:hover,
+#sidebar .dropdown-btn:hover,
+.sub-menu>div>li:hover {
+  /* Hover effect on links, dropdown buttons and sub menus items */
+  background-color: var(--hover-clr);
+}
+
+/* For animating the transition while opening/closing sub menus: */
+#sidebar .sub-menu {
+  display: grid;
+  grid-template-rows: 0fr; /* Sub menu hidden*/
+  transition: 300ms ease-in-out;
+  >div {
+    max-height: 12vh;
+    overflow: hidden;
+  }
+}
+
+#sidebar .sub-menu.show {
+  grid-template-rows: 1fr; /* Sub menu displayed*/
+  >div {
+      max-height: 12vh;
+      overflow: auto;
+    }}
+
+.dropdown-btn svg {
+  /* Animation of the dropdown icon rotation */
+  transition: 200ms ease;
+}
+
+.rotate svg:last-child {
+  rotate: 180deg; /* Definition of "rotate" for dropdown icon rotation */
+}
+
+#sidebar .sub-menu li {
+  padding-left: 2em; /* Indent sub menu items */
+}
+
+/* Logo button and open/close navbar */
+#toggle-btn {
+  margin-left: auto;
+  padding: 1em;
+  border: none;
+  border-radius: .5em;
+  background: none;
+  cursor: pointer;
+
+  svg {
+    transition: rotate 150ms ease;
+  }
+}
+
+#toggle-btn:hover {
+  background-color: var(--hover-clr);
+}
+
+.main {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  box-sizing: content-box;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc(100vw - var(--closed-sidebar-width));
+}
+
+#map .ol-overlaycontainer-stopevent {
+  display:flex;
+  flex-direction: column;
+}
+
+#map .ol-control button {
+  width: var(--icons-width);
+  height: var(--icons-width);
+}
+
+#map .ol-zoom {
+  order: 2;
+  background-color: var(--icons-container-background-color);
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  position: relative;
+  border-radius: 0px 0px 8px 0px;
+}
+
+#map [class*='ol-zoom-'] {
+  color: var(--transparent-color);
+  outline: none;
+  scale: 1.1;
+  background-color: var(--transparent-color);
+  background-position: center;
+  margin: auto;
+  padding: 1.2em;
+  background-repeat: no-repeat;
+}
+#map .ol-zoom-in {
+  background-image: url('/icons/zoom_in_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
+}
+#map .ol-zoom-out {
+  background-image: url('/icons/zoom_out_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
+}
+#map [class*='ol-zoom-']:hover {
+  background-color: var(--icons-hover-color);
+}
+
+#map .ol-full-screen {
+  order: 1;
+  background-color: var(--icons-container-background-color);
+  left: 0;
+  width: fit-content;
+  position: relative;
+  border-radius: 0px 8px 0px 0px;
+}
+
+#map [class*='ol-full-screen-'] {
+  outline: none;
+  color: var(--transparent-color);
+  scale: 1.1;
+  background-color: var(--transparent-color);
+  background-position: center;
+  margin: auto;
+  padding: 1.2em;
+  background-repeat: no-repeat;
+}
+
+#map .ol-full-screen-false {
+  background-image: url('/icons/zoom_out_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
+}
+#map .ol-full-screen-true {
+    background-image: url('/icons/zoom_in_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
+}
+
+#map [class*='ol-full-screen-']:hover {
+  background-color: var(--icons-hover-color);
+}
+
+.play-ctrl {
+  order: 3;
+  background-color: var(--icons-container-background-color);
+}
+
+.play-ctrl [class*='play-ctrl-'] {
+  outline: none !important;
+  background-color:var(--transparent-color);
+}
+
+.play-ctrl [class*='play-ctrl-']:hover {
+  outline: none !important;
+  background-color: var(--icons-hover-color);
+}

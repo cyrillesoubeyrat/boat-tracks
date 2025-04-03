@@ -1,0 +1,46 @@
+.play-ctrl {
+    --base-color: rgba(50, 50, 50, .5);
+    --hover-color: #222533;
+    --icons-background-color: rgba(128, 128, 128, 0);
+    --icons-width: 24px;
+}
+
+.play-ctrl.show {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2em;
+    background-color: var(--base-color);
+    left: 0px;
+    width: fit-content;
+    position: relative;
+    border-radius: 0px 8px 8px 0px;
+}
+
+.play-ctrl {
+    display: none;
+}
+
+.play-ctrl [class*='play-ctrl-'].show {
+    display: flex;
+    background-color: var(--icons-background-color);
+    scale: 1.1;
+    opacity: 1;
+    pointer-events: all;
+    background-position: center;
+    margin:auto;
+    padding: 1.2em;
+    background-repeat: no-repeat;
+}
+
+.play-ctrl [class*='play-ctrl-']:hover {
+    background-color: var(--hover-color);
+}
+
+.play-ctrl [class*='play-ctrl-'].disabled {
+    opacity: .2;
+    pointer-events: none;
+}
+
+.play-ctrl [class*='play-ctrl-'] {
+    display: none;
+}

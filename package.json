@@ -1,0 +1,16 @@
+{
+  "name": "min_ol_web_app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^6.2.1"
+  },
+  "dependencies": {
+    "min_ol_web_app": "file:",
+    "ol": "latest"
+  }
+}
