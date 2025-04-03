@@ -88,7 +88,7 @@ class DocItemList {
     }
 
     // * Public methods:
-    addItem(itemName, selected=true) {
+    addItem(itemId, itemName=itemId, selected=true) {
         if (itemName) {
             // If list is empty, first add a special item for deselecting all list 
             if (this.#allowMultiSelection && !this.#listDiv.firstChild) {
@@ -98,7 +98,7 @@ class DocItemList {
                 this.#listDiv.appendChild(li);
             }
             const li = document.createElement('li');
-            li.id = itemName;
+            li.id = itemId;
             li.innerHTML = itemName;
             if (selected) li.classList = "selected";
             this.#listDiv.appendChild(li);
@@ -108,12 +108,12 @@ class DocItemList {
         }
     }
 
-    removeItem(itemName) {
-        let item = document.getElementById(itemName);
+    removeItem(itemId) {
+        let item = document.getElementById(itemId);
         if (item && item.parentElement.id == "sailors-div") {
             item.remove();
             if (this.onItemRemovedHandler) {
-                this.onItemRemovedHandler(itemName);
+                this.onItemRemovedHandler(itemId);
             }
         }
     }

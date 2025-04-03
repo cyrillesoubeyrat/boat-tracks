@@ -1,7 +1,7 @@
 import './style.css';
 import {Map, View} from 'ol';
 import Group from 'ol/layer/Group';
-import {useGeographic} from "ol/proj";
+import {transformWithProjections, useGeographic} from "ol/proj";
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from "ol/source/Vector";
@@ -23,10 +23,10 @@ import CircleMarker from './src/geometry/CircleMarker';
 
 const docSidebar = document.getElementById('sidebar')
 const docToggleButton = document.getElementById('toggle-btn')
-const docTeamList = document.getElementById('teams-div')
+const docTeamList = new DocItemList('teams-div')
 const docBoatList = new DocItemList("sailors-div");
 const docDisplayModeList = new DocItemList("display-mode-div");
-const docMapNamesList = document.getElementById('map-names-div')
+const docMapNamesList = new DocItemList('map-names-div')
 
 let g_baseLayerGroup = null;
 let g_baseMap = null;
@@ -78,8 +78,14 @@ function zoomKludge(on = true) {
   }
 }
 
+
+// ************************************
+// ************************************
+// * Click handlers for fleet controls
+// ************************************
+// ************************************
+
 function fleetStartedtHandler(event) {
-  console.log("fleetStartedtHandler");
   if (!g_fleet.isPaused) {
     clearBoatsLayer()
   }
@@ -87,27 +93,22 @@ function fleetStartedtHandler(event) {
 }
 
 function fleetPausedHandler(event) {
-  console.log("fleetPausedHandler");
   pauseAnimation();
 }
 
 function fleetAcceleratedHandler(event) {
-  console.log("fleetAcceleratedHandler");
   g_fleetSpeedFactor.increase();
 }
 
 function fleetDeceleratedHandler(event) {
-  console.log("fleetDeceleratedHandler");
   g_fleetSpeedFactor.decrease();
 }
 
 function fleetRestartedHandler(event) {
-  console.log("fleetRestartedHandler");
   restartAnimation();
 }
 
 function fleetStoppedHandler(event) {
-  console.log("fleetStoppedHandler");
   g_fleetSpeedFactor.reset();
   resetAnimation();
   if (g_fleet.size) {
@@ -117,23 +118,75 @@ function fleetStoppedHandler(event) {
   return true;
 }
 
+
+// ************************************
+// ************************************
+// * Click handlers for teams menu
+// ************************************
+// ************************************
+
+function teamItemSelectedHandler(teamID, single) {
+  // Show sidebar's dropdown items that are valid only after loading a valid team
+  Array.from(docSidebar.getElementsByClassName('dropdown-btn')).forEach(btn => {
+    if (!btn.classList.contains("show")) {
+      btn.classList.toggle('show');
+    }
+  })
+
+  if (single) {
+    // Simple selection ==> Remove all teams and associated boats prior loading new team and correponding boats
+    resetAnimation();
+    unloadAllBoats();
+    loadBoats(teamID)
+    g_teams.length = 0;
+    g_teams.push(teamID);
+    g_fleetCtrl.reset();
+  }
+  else {
+    // Multiple selection:
+    if (!g_teams.includes(teamID)) {
+      // ==> If selected, preserve already loaded teams and associated boats
+      if (!g_fleet.size) {
+        g_fleetCtrl.reset();
+      }
+      loadBoats(teamID)
+      g_teams.push(teamID);
+    }
+  }
+}
+
+function teamItemDeselectedHandler(teamID, single) {
+  if (!single) {
+    // ==> If deselected, remove team and associated boats
+    let teamIdx = g_teams.indexOf(teamID);
+    if (teamIdx >= 0) {
+      unloadBoats(teamID);
+      g_teams.splice(teamIdx, 1);
+      clearBoatsLayer(true);
+    }
+  }
+}
+
+
+// *********************************************
+// *********************************************
+// // * Click handlers for fleet (boats) menu
+// *********************************************
+// *********************************************
+
 function allBoatsItemDisabledHandler() {
-  console.log("allBoatsItemDisabledHandler");
   g_fleet.disable();
 }
 
 function boatItemAppendedHandler (boatName) {
-  console.log("boatItemAppendedHandler");
   g_fleet.enableBoatByname(boatName);
 }
 
 function boatItemRemovedHandler(boatName) {
-  console.log("boatItemRemovedHandler");
   g_fleet.disableBoatByname(boatName);
 }
 
 function boatItemSelectedHandler(boatName, single) {
-  console.log("boatItemSelectedHandler");
   if (single) {
     // A single boat has just been selected
     hideBoatsLayer(true);
@@ -144,14 +197,19 @@ function boatItemSelectedHandler(boatName, single) {
 }
 
 function boatItemDeselectedHandler(boatName) {
-  console.log("boatItemDeselectedHandler");
   g_fleet.disableBoatByname(boatName);
   hideBoatsLayer(true);
 }
 
+
+// *********************************************
+// *********************************************
+// // * Click handlers for display mode menu
+// *********************************************
+// *********************************************
+
 function displayModeSelectedHandler(modeName) {
-  console.log("displayModeSelectedHandler");
-  if (modeName == "Flotte") {
+  if (modeName == "Fleet") {
     g_trackFleetMode = true;
     g_fleetCenterMarker.show();
   }
@@ -162,11 +220,19 @@ function displayModeSelectedHandler(modeName) {
 }
 
 function displayModeDeselectedHandler(modeName) {
-  console.log("displayModeSelectedHandler");
+  if (modeName == "Fleet") {
+    g_trackFleetMode = false;
+    g_fleetCenterMarker.hide();
+  }
+  else {
+    g_trackFleetMode = true;
+    g_fleetCenterMarker.show();
+  }
 }
 
 
-  
+
+
 function initializeDocAndControls() {
   // Set handlers for click event in the PlayControl object
   g_fleetCtrl.onPlayClicked = fleetStartedtHandler;
@@ -176,6 +242,11 @@ function initializeDocAndControls() {
   g_fleetCtrl.onRestartClicked = fleetRestartedHandler;
   g_fleetCtrl.onStopClicked = fleetStoppedHandler;
 
+  // Set handlers for click event in the Team list menu object
+  docTeamList.allowMultiSelection = true;
+  docTeamList.onItemSelected = teamItemSelectedHandler;
+  docTeamList.onItemDeselected = teamItemDeselectedHandler;
+
   // Set handlers for click event in the Boat list object
   docBoatList.allowMultiSelection = true;
   docBoatList.onDisableAll = allBoatsItemDisabledHandler;
@@ -184,12 +255,21 @@ function initializeDocAndControls() {
   docBoatList.onItemSelected = boatItemSelectedHandler;
   docBoatList.onItemDeselected = boatItemDeselectedHandler;
 
-  // Set handlers for click event in the Display Modes list object
+  // Setup the Display Modes menu list object
   docDisplayModeList.allowMultiSelection = false;
   docDisplayModeList.onItemSelected = displayModeSelectedHandler;
   docDisplayModeList.onItemDeselected = displayModeDeselectedHandler;
-  docDisplayModeList.addItem("Aucun", false);
-  docDisplayModeList.addItem("Flotte", true);
+  docDisplayModeList.addItem("None", "Aucun", false);
+  docDisplayModeList.addItem("Fleet", "Flotte", true);
+
+  // Setup the Map menu list object
+  docMapNamesList.allowMultiSelection = false;
+  docMapNamesList.onItemSelected = mapItemSelectedHandler;
+  docMapNamesList.onItemDeselected = mapItemDeselectedHandler;
+  docMapNamesList.addItem("AlidadeSatellite", "Alidade Satellite", true); // Selected item
+  docMapNamesList.addItem("OpenStreetMap", "OpenStreetMap", false);
+  docMapNamesList.addItem("StamenWatercolor", "Stamen Watercolor", false);
+
 }
 
 
@@ -359,10 +439,7 @@ function loadTeamList(teamListPath) {
     }))
     .then(teams => {
       for (const team of teams) {
-          const li = document.createElement('li');
-        li.id = team.id;
-        li.innerText = team.name;
-        docTeamList.appendChild(li);
+        docTeamList.addItem(team.id, team.name, false);
       }
       return teams
     })  
@@ -408,84 +485,13 @@ function loadBoats (teamName) {
         g_boatsLayer.getSource().addFeature(boat.drag.feature);
 
         // Add boat to GUI
-        docBoatList.addItem(boat.name);
+        docBoatList.addItem(boat.name, boat.name, true);
 
         g_fleet.addBoat(boat);
       }
     })
 }
 
-// For managing submenus items list
-function onSubMenuItemClicked(event) {
-  let multiSelect = event.ctrlKey;
-  let clickableTargetItem = true; // true if it is legit to click this item
-  if (event.target) {
-    const associatedMenuButton = event.target.parentElement.parentElement.previousElementSibling
-    if (associatedMenuButton.id === "teams-btn") {
-      ///////////////////////////////////////
-      // Clicked on item of the teams submenu
-      ///////////////////////////////////////
-      // Show sidebar's dropdown items that are valid only after loading a valid team
-      Array.from(docSidebar.getElementsByClassName('dropdown-btn')).forEach(btn => {
-        if (!btn.classList.contains("show")) {
-          btn.classList.toggle('show');
-        }
-      })
-      let teamName = event.target.id;
-      if (!multiSelect) {
-        // Simple selection ==> Remove all teams and associated boats prior loading new team and correponding boats
-        resetAnimation();
-        unloadAllBoats();
-        loadBoats(teamName)
-        g_teams.length = 0;
-        g_teams.push(teamName);
-        g_fleetCtrl.reset();
-      }
-      else {
-        // Multiple selection:
-        if (!g_teams.includes(teamName)) {
-          // ==> If selected, preserve already loaded teams and associated boats
-          if (!g_fleet.size) {
-            g_fleetCtrl.reset();
-          }
-          loadBoats(teamName)
-          g_teams.push(teamName);
-        }
-        else {
-          // ==> If deselected, remove team and associated boats
-          let teamIdx = g_teams.indexOf(teamName);
-          if (teamIdx >= 0) {
-            unloadBoats(teamName);
-            g_teams.splice(teamIdx, 1);
-            clearBoatsLayer(true);
-          }
-        }
-      }
-    }
-    else if (associatedMenuButton.id === "boats-btn") {
-      return;
-    }
-    else if (associatedMenuButton.id === "modes-btn") {
-      /////////////////////////////////////////////////
-      // Clicked on item of the display mode submenu
-      /////////////////////////////////////////////////
-      // Disallow multiple selction on this submenu
-      multiSelect = false;
-    }
-
-    // Deselect all (sibling) team items if click is not a multiple selection
-    if (!multiSelect) {
-      const siblings = event.target.parentElement.children
-      for (let li of siblings) {
-        li.classList.remove("selected")
-      }
-    }
-    // Select clicked team
-     if (clickableTargetItem) {
-      event.target.classList.toggle('selected')
-    }
-  }
-}
 
 // function toggleSidebar(){
 window.toggleSidebar = () => {
@@ -515,10 +521,7 @@ window.toggleSubMenu = (button) => {
   // Rotate the icon of the menu then toggle the "show" attribute of its sub menu
   submenu.classList.toggle ('show')
   button.classList.toggle ('rotate')
-  if (submenu.classList.contains("show")) {
-    // Manage clicks on sub menu list items:
-    submenu.addEventListener("click", onSubMenuItemClicked)
-  }
+
   // If the sidebar is closed when clicking on a menu button, toggle its "closed" flag
   // and rotate its arrow icon
   if(sidebar.classList.contains ('closed')){
@@ -527,24 +530,27 @@ window.toggleSubMenu = (button) => {
   }
 }
 
-// Manage clicks on map names list items:
-docMapNamesList.addEventListener("click", (event) => {
-  if (event.target) {
-    // const targetLayerName = event.target.innerText;
-    const targetLayerId = event.target.id;
-    const layers = g_baseLayerGroup.getLayers()
-    layers.forEach(layer => {
-      const properties = layer.getProperties()
-      if (properties.title === targetLayerId) {
-        layer.setVisible (true);
-      }
-      else if (properties.title) {
-        // whales and exclusion zones have no title attribute
-        layer.setVisible (false);
-      }
-    })
+function mapItemSelectedHandler(event) {
+  const targetLayerId = event;
+  const layers = g_baseLayerGroup.getLayers();
+  for (let idx = 0; idx < layers.getArray().length; idx++) {
+    if (layers.getArray()[idx].getProperties().title === targetLayerId) {
+      layers.getArray()[idx].setVisible(true);
+      break;
+    }
   }
-});
+}
+
+function mapItemDeselectedHandler(event) {
+  const targetLayerId = event;
+  const layers = g_baseLayerGroup.getLayers();
+  for (let idx = 0; idx < layers.getArray().length; idx++) {
+    if (layers.getArray()[idx].getProperties().title === targetLayerId) {
+      layers.getArray()[idx].setVisible(false);
+      break;
+    }
+  }
+}
 
 
 
@@ -661,7 +667,6 @@ function parseUrlParameters() {
     let params = urlParameters.split('&');
     params.forEach(param => {
       let tokenValuePair = param.split('=');
-      console.log("tokenValuePair", tokenValuePair)
       if (tokenValuePair.length == 2) {
         if (tokenValuePair[0] == "teamlist") {
           teamList = tokenValuePair[1];
