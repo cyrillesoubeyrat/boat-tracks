@@ -651,14 +651,42 @@ function restartAnimation() {
   startAnimation();
 }
 
+// * Read URL's parameters
+function parseUrlParameters() {
+  const url = window.location.href;
+  const urlParameters = (url.indexOf('?')) ? (url.substring(url.indexOf('?') + 1)) : null;
+  let teamList = null;
+
+  if (urlParameters) {
+    let params = urlParameters.split('&');
+    params.forEach(param => {
+      let tokenValuePair = param.split('=');
+      console.log("tokenValuePair", tokenValuePair)
+      if (tokenValuePair.length == 2) {
+        if (tokenValuePair[0] == "teamlist") {
+          teamList = tokenValuePair[1];
+        }
+      }
+    })
+  }
+
+  if (teamList == null) {
+    teamList = "defaultTeamList";
+  }
+  teamList = "/data/" + teamList + ".json";
+
+  return teamList;
+}
+
 
 function appInit() {
+  const teamList = parseUrlParameters();
+  loadTeamList(teamList);
   initializeMaps();
   initializeDocAndControls();
 }
 
+
 useGeographic();
 
 window.onload = appInit;
-
-loadTeamList ('/data/teamList.json')
