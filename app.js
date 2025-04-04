@@ -729,7 +729,7 @@ function parseUrlParameters() {
   if (teamList == null) {
     teamList = "defaultTeamList";
   }
-  teamList = "/data/" + teamList + ".json";
+  teamList = "./data/" + teamList + ".json";
 
   return teamList;
 }
