@@ -12,7 +12,7 @@
   --accent-clr: #5e63ff;
   --transparent-color: rgba(128, 128, 128, 0);
   --secondary-text-clr: #b0b3c1;
-  --closed-sidebar-width: 60px;
+  --closed-sidebar-width: 59px;
   --opened-sidebar-width: 250px;
   --icons-hover-color: #0c0c11;
   --icons-width: 24px;
@@ -44,6 +44,9 @@ body {
 /* Attributes of the sidebar: */
 /******************************/
 #sidebar {
+  /* TODO */ display: flex;
+  /* TODO */ flex-direction: column;
+  /* TODO */ justify-content: space-between;
   box-sizing: border-box;
   height: 100vh;
   width: var(--opened-sidebar-width);
@@ -162,6 +165,10 @@ for allowing to show and hide them:
       max-height: 12vh;
       overflow: auto;
     }}
+
+#sidebar .bottom-items {
+  margin-bottom: 10px;
+}
 
 .dropdown-btn svg {
   /* Animation of the dropdown icon rotation */

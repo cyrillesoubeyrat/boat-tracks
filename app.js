@@ -1,7 +1,7 @@
 import './style.css';
 import {Map, View} from 'ol';
 import Group from 'ol/layer/Group';
-import {transformWithProjections, useGeographic} from "ol/proj";
+import {useGeographic} from "ol/proj";
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from "ol/source/Vector";
@@ -16,9 +16,14 @@ import Fleet from "./src/geometry/Fleet";
 import PlayControls from "./src/gui/html_ctrl/PlayControls";
 import DocItemList from "./src/gui/html_doc/DocItemList";
 import FleetSpeedFactor from "./src/FleetSpeedFactor";
-import CircleMarker from './src/geometry/CircleMarker';
+import ModeMarker from './src/geometry/CrossHairMarker';
+import { fromExtent } from 'ol/geom/Polygon.js'
 
-
+const TrackType = {
+  NONE: "None",
+  CENTERED: "Centered",
+  FOCUSED: "Focused"
+}
 
 
 const docSidebar = document.getElementById('sidebar')
@@ -35,7 +40,7 @@ let g_fleetCenterMarker = null;
 let g_teams = []; // Active teams
 let g_fleet = new Fleet(); // Active boats
 let g_fleetCtrl = new PlayControls();
-let g_trackFleetMode = true;
+let g_trackFleetMode = TrackType.CENTERED;
 
 const raceStartTimestamp = Math.floor(new Date("2024-11-10T12:00:00"));
 let g_timeStamp = raceStartTimestamp;
@@ -209,25 +214,32 @@ function boatItemDeselectedHandler(boatName) {
 // *********************************************
 
 function displayModeSelectedHandler(modeName) {
-  if (modeName == "Fleet") {
-    g_trackFleetMode = true;
+  g_trackFleetMode = modeName;
+
+  if (modeName == TrackType.CENTERED) {
+    g_fleetCenterMarker.setCircleShape();
+    g_fleetCenterMarker.show();
+  }
+  else if (modeName == TrackType.FOCUSED) {
+    g_fleetCenterMarker.setSquareShape();
     g_fleetCenterMarker.show();
   }
   else {
-    g_trackFleetMode = false;
+    g_trackFleetMode = TrackType.NONE;
     g_fleetCenterMarker.hide();
   }
 }
 
 function displayModeDeselectedHandler(modeName) {
-  if (modeName == "Fleet") {
-    g_trackFleetMode = false;
-    g_fleetCenterMarker.hide();
-  }
-  else {
-    g_trackFleetMode = true;
-    g_fleetCenterMarker.show();
-  }
+  // TODO if (modeName == "Fleet") {
+  //   g_fleetCenterMarker.hide();
+  // }
+  // else if (modeName == "FleetFocused") {
+  //   g_fleetCenterMarker.hide();
+  // }
+  // else {
+  //   g_fleetCenterMarker.show();
+  // }
 }
 
 
@@ -259,8 +271,9 @@ function initializeDocAndControls() {
   docDisplayModeList.allowMultiSelection = false;
   docDisplayModeList.onItemSelected = displayModeSelectedHandler;
   docDisplayModeList.onItemDeselected = displayModeDeselectedHandler;
-  docDisplayModeList.addItem("None", "Aucun", false);
-  docDisplayModeList.addItem("Fleet", "Flotte", true);
+  docDisplayModeList.addItem(TrackType.NONE, "Aucun", false);
+  docDisplayModeList.addItem(TrackType.CENTERED, "Flotte (centre)", true);
+  docDisplayModeList.addItem(TrackType.FOCUSED, "Flotte (focus)", false);
 
   // Setup the Map menu list object
   docMapNamesList.allowMultiSelection = false;
@@ -374,7 +387,8 @@ function initializeMaps() {
   const infoLayer = new VectorLayer({
     source: new VectorSource({wrapX: false})
   });
-  g_fleetCenterMarker = new CircleMarker();
+  g_fleetCenterMarker = new ModeMarker();
+  g_fleetCenterMarker.setCircleShape();
 
   infoLayer.getSource().addFeature(g_fleetCenterMarker.feature);
   
@@ -567,10 +581,18 @@ function moveBoats(event) {
       boat.started = true;
       boat.setCoordinates(newCoordinates); // update boat position
       boat.drag.addPoint(newCoordinates); // add point to boat line
-      if (g_trackFleetMode) {
+      if (g_trackFleetMode == TrackType.CENTERED) {
         // Center map on fleet
         const fleetCenter = g_fleet.centerCoordinates;
         g_baseMap.getView().setCenter(fleetCenter);
+        g_fleetCenterMarker.setCoordinates(fleetCenter);
+      }
+      else if (g_trackFleetMode == TrackType.FOCUSED) {
+        // Center and zoom map on fleet
+        const fleetCenter = g_fleet.centerCoordinates;
+        let extentGeometry = fromExtent(g_fleet.extent);
+        extentGeometry.scale(1.2);
+        g_baseMap.getView().fit(extentGeometry);
         g_fleetCenterMarker.setCoordinates(fleetCenter);
       }
     }
@@ -632,7 +654,7 @@ function moveBoats(event) {
 function startAnimation() {
   g_fleet.isPaused = false;
   zoomKludge(true);
-  if (g_trackFleetMode) g_fleetCenterMarker.show();
+  if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.show();
 
   g_boatsLayer.on('postrender', moveBoats);
   g_baseMap.render();  
@@ -645,7 +667,7 @@ function pauseAnimation() {
 function resetAnimation() {
   g_boatsLayer.un('postrender', moveBoats);
   zoomKludge(false);
-  if (g_trackFleetMode) g_fleetCenterMarker.hide();
+  if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.hide();
   clearBoatsLayer();
   pauseAnimation();
   g_timeStamp = raceStartTimestamp;

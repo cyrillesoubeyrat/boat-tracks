@@ -117,6 +117,10 @@ export default class Fleet {
         return center;
     }
 
+    get extent() {
+        return this.#boundingExtent(this.#enabledBoats);
+    }
+
     set isPaused(status) {
         this.#isPaused = status;
     }
