@@ -257,6 +257,9 @@ main {
 #map [class*='ol-zoom-']:hover {
   background-color: var(--icons-hover-color);
 }
+#map [class*='ol-zoom-'].disabled {
+  opacity: .2;
+}
 
 #map .ol-full-screen {
   order: 1;

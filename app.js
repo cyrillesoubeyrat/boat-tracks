@@ -69,20 +69,42 @@ function zoomClicked(event) {
 // * The kludge consists in overriding this behaviour using a simple zoom procedure
 // * without animation.
 function zoomKludge(on = true) {
-  let zoomIn = document.getElementsByClassName("ol-zoom-in");
-  let zoomOut = document.getElementsByClassName("ol-zoom-out");
+  let zoomIn = document.getElementsByClassName("ol-zoom-in")[0];
+  let zoomOut = document.getElementsByClassName("ol-zoom-out")[0];
   if (zoomIn && zoomOut) {
     if (on) {
-      zoomIn.item(0).addEventListener("click", zoomClicked);
-      zoomOut.item(0).addEventListener("click", zoomClicked);
+      zoomIn.addEventListener("click", zoomClicked);
+      zoomOut.addEventListener("click", zoomClicked);
     }
     else {
-      zoomIn.item(0).removeEventListener("click", zoomClicked);
-      zoomOut.item(0).removeEventListener("click", zoomClicked);
+      zoomIn.removeEventListener("click", zoomClicked);
+      zoomOut.removeEventListener("click", zoomClicked);
     }
   }
 }
 
+function disableZoomControls() {
+  let zoomIn = document.getElementsByClassName("ol-zoom-in")[0];
+  let zoomOut = document.getElementsByClassName("ol-zoom-out")[0];
+  if (!zoomIn.classList.contains("disabled")) {
+    zoomIn.classList.add("disabled");
+  }
+  if (!zoomOut.classList.contains("disabled")) {
+    zoomOut.classList.add("disabled");
+  }
+}
+
+function enableZoomControls() {
+  let zoomIn = document.getElementsByClassName("ol-zoom-in")[0];
+  let zoomOut = document.getElementsByClassName("ol-zoom-out")[0];
+
+  if (zoomIn.classList.contains("disabled")) {
+    zoomIn.classList.remove("disabled");
+  }
+  if (zoomOut.classList.contains("disabled")) {
+    zoomOut.classList.remove("disabled");
+  }
+}
 
 // ************************************
 // ************************************
@@ -219,14 +241,20 @@ function displayModeSelectedHandler(modeName) {
   if (modeName == TrackType.CENTERED) {
     g_fleetCenterMarker.setCircleShape();
     g_fleetCenterMarker.show();
+    enableZoomControls();
+    zoomKludge(true);
   }
   else if (modeName == TrackType.FOCUSED) {
     g_fleetCenterMarker.setSquareShape();
     g_fleetCenterMarker.show();
+    disableZoomControls();
+    zoomKludge(false);
   }
   else {
     g_trackFleetMode = TrackType.NONE;
     g_fleetCenterMarker.hide();
+    enableZoomControls();
+    zoomKludge(false);
   }
 }
 
@@ -273,6 +301,7 @@ function initializeDocAndControls() {
   docDisplayModeList.onItemDeselected = displayModeDeselectedHandler;
   docDisplayModeList.addItem(TrackType.NONE, "Aucun", false);
   docDisplayModeList.addItem(TrackType.CENTERED, "Flotte (centre)", true);
+  zoomKludge(true);
   docDisplayModeList.addItem(TrackType.FOCUSED, "Flotte (focus)", false);
 
   // Setup the Map menu list object
@@ -645,7 +674,7 @@ function moveBoats(event) {
     g_fleet.reset();
     g_fleetCtrl.reset();
     g_boatsLayer.un('postrender', moveBoats);
-    zoomKludge(false);
+    // zoomKludge(false);
   }
     // tell OpenLayers to continue the postrender animation
   g_baseMap.render();
@@ -653,7 +682,7 @@ function moveBoats(event) {
 
 function startAnimation() {
   g_fleet.isPaused = false;
-  zoomKludge(true);
+  // zoomKludge(true);
   if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.show();
 
   g_boatsLayer.on('postrender', moveBoats);
@@ -666,7 +695,7 @@ function pauseAnimation() {
 
 function resetAnimation() {
   g_boatsLayer.un('postrender', moveBoats);
-  zoomKludge(false);
+  // zoomKludge(false);
   if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.hide();
   clearBoatsLayer();
   pauseAnimation();
