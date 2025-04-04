@@ -61,12 +61,12 @@ class PlayControls extends Control {
         const decreaseSpeedTipLabel = options.decreaseSpeedTipLabel != undefined ? options.decreaseSpeedTipLabel : 'Decrease boats speed';
         const stopTipLabel = options.stopTipLabel != undefined ? options.stopTipLabel : 'Stop Sailing';
 
-        const startIconImagePath = options.startIconImagePath || "/icons/play_arrow_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
-        const pauseIconImImagePath = options.pauseIconImagePath || "/icons/pause_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
-        const stopIconImagePath = options.stopIconSvgPath || "/icons/stop_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
-        const restartIconImagePath = options.restartIconImagePath || "/icons/skip_previous_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
-        const increaseSpeedIconImagePath = options.increaseSpeedIconImagePath || "/icons/clock_arrow_up_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
-        const decreaseSpeedIconImagePath = options.decreaseSpeedIconImagePath || "/icons/clock_arrow_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const startIconImagePath = options.startIconImagePath || "./icons/play_arrow_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const pauseIconImImagePath = options.pauseIconImagePath || "./icons/pause_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const stopIconImagePath = options.stopIconSvgPath || "./icons/stop_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const restartIconImagePath = options.restartIconImagePath || "./icons/skip_previous_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const increaseSpeedIconImagePath = options.increaseSpeedIconImagePath || "./icons/clock_arrow_up_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
+        const decreaseSpeedIconImagePath = options.decreaseSpeedIconImagePath || "./icons/clock_arrow_down_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg";
         
         this.element.className = this._cssClassNames;
         this.element.classList.add("show");
