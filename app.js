@@ -1,12 +1,12 @@
 import './style.css';
-import {Map, View} from 'ol';
+import { Map, View } from 'ol';
 import Group from 'ol/layer/Group';
-import {useGeographic} from "ol/proj";
+import { useGeographic } from "ol/proj";
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
 import VectorSource from "ol/source/Vector";
 import { Fill, Stroke, Style } from "ol/style";
-import {GeoJSON} from "ol/format";
+import { GeoJSON } from "ol/format";
 import { StadiaMaps } from 'ol/source';
 import OSM from 'ol/source/OSM';
 import FullScreen from 'ol/control/FullScreen';
@@ -205,7 +205,7 @@ function allBoatsItemDisabledHandler() {
   g_fleet.disable();
 }
 
-function boatItemAppendedHandler (boatName) {
+function boatItemAppendedHandler(boatName) {
   g_fleet.enableBoatByname(boatName);
 }
 
@@ -331,7 +331,7 @@ function initializeMaps() {
   g_baseMap = baseMap;
 
   // Define the candidate base map layers:
-  const openStreetMap = new TileLayer ({
+  const openStreetMap = new TileLayer({
     source: new OSM(),
     visible: false,
     title: 'OpenStreetMap'
@@ -360,13 +360,13 @@ function initializeMaps() {
     'data/exclusion-zones/pv_zea_v7.json',
     'data/exclusion-zones/pv_zi_vg_2024.json'
   ]
-  
+
   const exlusionZonesLayer = new VectorLayer({
-    source: new VectorSource ({
+    source: new VectorSource({
       features: [],
     }),
-    style: new Style ({
-      stroke: new Stroke ({
+    style: new Style({
+      stroke: new Stroke({
         color: 'rgb(220, 7, 7)',
         width: 1,
       }),
@@ -384,9 +384,9 @@ function initializeMaps() {
 
   // Define the layers for the exclusion zone:
   const whalesZonesFile = 'data/exclusion-zones/pv_zone_whales.json';
-  
-  const whalesZonesLayer = new VectorLayer ({
-    source: new VectorSource ({
+
+  const whalesZonesLayer = new VectorLayer({
+    source: new VectorSource({
       features: [],
     }),
     style: new Style({
@@ -401,12 +401,12 @@ function initializeMaps() {
   });
 
   fetch(whalesZonesFile)
-    .then(res => res.json ())
-    .then(geojsonObject => { whalesZonesLayer.getSource ().addFeatures (new GeoJSON().readFeatures (geojsonObject)) })
-  
+    .then(res => res.json())
+    .then(geojsonObject => { whalesZonesLayer.getSource().addFeatures(new GeoJSON().readFeatures(geojsonObject)) })
+
   // Define the layers for boats:
-  const boatsLayer = new VectorLayer ({
-    source: new VectorSource ({
+  const boatsLayer = new VectorLayer({
+    source: new VectorSource({
       features: [],
       wrapX: true
     }),
@@ -414,15 +414,15 @@ function initializeMaps() {
   g_boatsLayer = boatsLayer;
 
   const infoLayer = new VectorLayer({
-    source: new VectorSource({wrapX: false})
+    source: new VectorSource({ wrapX: false })
   });
   g_fleetCenterMarker = new ModeMarker();
   g_fleetCenterMarker.setCircleShape();
 
   infoLayer.getSource().addFeature(g_fleetCenterMarker.feature);
-  
+
   // Define the layer group
-  g_baseLayerGroup = new Group ({
+  g_baseLayerGroup = new Group({
     layers: [alidadeSatellite, openStreetMap, stamenWatercolor, exlusionZonesLayer, whalesZonesLayer, boatsLayer, infoLayer]
   })
 
@@ -439,14 +439,14 @@ function initializeMaps() {
 function clearBoatsLayer(disabledOnly = false) {
   if (disabledOnly) {
     g_fleet.disabledBoatsMap.forEach(boat => {
-        boat.erase();
-        boat.drag.erase();
+      boat.erase();
+      boat.drag.erase();
     })
   }
   else {
     g_fleet.map.forEach(boat => {
-        boat.erase();
-        boat.drag.erase();
+      boat.erase();
+      boat.drag.erase();
     })
   }
 
@@ -459,14 +459,14 @@ function clearBoatsLayer(disabledOnly = false) {
 function hideBoatsLayer(disabledOnly = false) {
   if (disabledOnly) {
     g_fleet.disabledBoatsMap.forEach(boat => {
-        boat.erase();
-        boat.drag.hide();
+      boat.erase();
+      boat.drag.hide();
     })
   }
   else {
     g_fleet.map.forEach(boat => {
-        boat.erase();
-        boat.drag.hide();
+      boat.erase();
+      boat.drag.hide();
     })
   }
 
@@ -478,14 +478,14 @@ function loadTeamList(teamListPath) {
   fetch(teamListPath)
     .then(res => res.json())
     .then(res => res.sort(function (a, b) {
-          return a.name.localeCompare(b.name);
+      return a.name.localeCompare(b.name);
     }))
     .then(teams => {
       for (const team of teams) {
         docTeamList.addItem(team.id, team.name, false);
       }
       return teams
-    })  
+    })
 }
 
 // Delete all boats
@@ -512,8 +512,10 @@ function unloadBoats(teamName) {
   }
 }
 
-function loadBoats (teamName) {
-  let teamPath = '/data/teams/' + teamName + '.json';
+function loadBoats(teamName) {
+  // let teamPath = './public/data/teams/' + teamName + '.json';
+  let teamPath = new URL(`/public/data/teams/${teamName}.json`, import.meta.url).href;
+
   fetch(teamPath)
     .then(res => res.json())
     .then(res => res.sort(function (a, b) {
@@ -538,10 +540,10 @@ function loadBoats (teamName) {
 
 // function toggleSidebar(){
 window.toggleSidebar = () => {
-  docSidebar.classList.toggle ('closed')
-  docToggleButton.classList.toggle ('rotate')
+  docSidebar.classList.toggle('closed')
+  docToggleButton.classList.toggle('rotate')
 
-  closeAllSubMenus ()
+  closeAllSubMenus()
 }
 
 window.closeAllSubMenus = () => {
@@ -559,16 +561,16 @@ window.toggleSubMenu = (button) => {
   const submenu = button.nextElementSibling
   // Close its sub menu if it hasn't the "show" attribute
   if (!submenu.classList.contains('show')) {
-    closeAllSubMenus ()
+    closeAllSubMenus()
   }
   // Rotate the icon of the menu then toggle the "show" attribute of its sub menu
-  submenu.classList.toggle ('show')
-  button.classList.toggle ('rotate')
+  submenu.classList.toggle('show')
+  button.classList.toggle('rotate')
 
   // If the sidebar is closed when clicking on a menu button, toggle its "closed" flag
   // and rotate its arrow icon
-  if(sidebar.classList.contains ('closed')){
-    sidebar.classList.toggle ('closed')
+  if (sidebar.classList.contains('closed')) {
+    sidebar.classList.toggle('closed')
     docToggleButton.classList.toggle('rotate')
   }
 }
@@ -676,7 +678,7 @@ function moveBoats(event) {
     g_boatsLayer.un('postrender', moveBoats);
     // zoomKludge(false);
   }
-    // tell OpenLayers to continue the postrender animation
+  // tell OpenLayers to continue the postrender animation
   g_baseMap.render();
 }
 
@@ -686,7 +688,7 @@ function startAnimation() {
   if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.show();
 
   g_boatsLayer.on('postrender', moveBoats);
-  g_baseMap.render();  
+  g_baseMap.render();
 }
 
 function pauseAnimation() {
@@ -729,9 +731,9 @@ function parseUrlParameters() {
   if (teamList == null) {
     teamList = "defaultTeamList";
   }
-  teamList = "./data/" + teamList + ".json";
+  let teamListPath = new URL(`/public/data/${teamList}.json`, import.meta.url).href;
 
-  return teamList;
+  return teamListPath;
 }
 
 
