@@ -4,6 +4,20 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+/* @media screen and (min-width: 320px) and (max-width: 767px) and (orientation: portrait) {
+  html {
+    transform: rotate(-90deg);
+    transform-origin: left top;
+    width: 100vh;
+    height: 100vw;
+    overflow-x: hidden;
+    position: absolute;
+    top: 100%;
+    left: 0;
+  }
+}
+  */
+
 :root {
   --base-clr: #11121a;
   --line-clr: #42434a;
@@ -31,7 +45,6 @@ html {
 }
 
 body {
-  min-height: 100vh;
   min-height: 100dvh;
   background-color: var(--base-clr);
   color: var(--text-clr);
@@ -44,17 +57,15 @@ body {
 /* Attributes of the sidebar: */
 /******************************/
 #sidebar {
-  /* TODO */ display: flex;
-  /* TODO */ flex-direction: column;
-  /* TODO */ justify-content: space-between;
   box-sizing: border-box;
-  height: 100vh;
+  height: 100dvh;
   width: var(--opened-sidebar-width);
   padding: 5px 1em;
   background-color: var(--base-clr);
   border-right: 1px solid var(--line-clr);
 
   position: sticky; /* For anchoring the sidebar regardless of scrolling in main window */
+  /* z-index: 1; */
   top: 0;
   align-self: start;
   transition: 300ms ease-in-out;
@@ -154,7 +165,7 @@ for allowing to show and hide them:
   grid-template-rows: 0fr; /* Sub menu hidden*/
   transition: 300ms ease-in-out;
   >div {
-    max-height: 12vh;
+    max-height: 12dvh;
     overflow: hidden;
   }
 }
@@ -162,7 +173,7 @@ for allowing to show and hide them:
 #sidebar .sub-menu.show {
   grid-template-rows: 1fr; /* Sub menu displayed*/
   >div {
-      max-height: 12vh;
+      max-height: 12dvh;
       overflow: auto;
     }}
 
@@ -202,8 +213,8 @@ for allowing to show and hide them:
 }
 
 .main {
-  height: 100%;
-  width: 100%;
+  height: 100dvh;
+  width: 100dvh;
 }
 
 main {
@@ -214,6 +225,7 @@ main {
   position: absolute;
   top: 0;
   bottom: 0;
+  height: 100dvh;
   width: calc(100vw - var(--closed-sidebar-width));
 }
 
