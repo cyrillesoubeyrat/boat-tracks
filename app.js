@@ -286,7 +286,7 @@ function initializeDocAndControls() {
   // Setup the Display Modes menu list object
   docDisplayModeList.allowMultiSelection = false;
   docDisplayModeList.onItemSelected = displayModeSelectedHandler;
-  docDisplayModeList.addItem(TrackType.NONE, "Aucun", false);
+  docDisplayModeList.addItem(TrackType.NONE, "Non", false);
   docDisplayModeList.addItem(TrackType.CENTERED, "Flotte (centre)", false);
   zoomKludge(true);
   docDisplayModeList.addItem(TrackType.FOCUSED, "Flotte (focus)", true);
