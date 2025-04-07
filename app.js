@@ -40,7 +40,7 @@ let g_fleetCenterMarker = null;
 let g_teams = []; // Active teams
 let g_fleet = new Fleet(); // Active boats
 let g_fleetCtrl = new PlayControls();
-let g_trackFleetMode = TrackType.CENTERED;
+let g_trackFleetMode = TrackType.FOCUSED;
 
 const raceStartTimestamp = Math.floor(new Date("2024-11-10T12:00:00"));
 let g_timeStamp = raceStartTimestamp;
@@ -258,18 +258,6 @@ function displayModeSelectedHandler(modeName) {
   }
 }
 
-function displayModeDeselectedHandler(modeName) {
-  // TODO if (modeName == "Fleet") {
-  //   g_fleetCenterMarker.hide();
-  // }
-  // else if (modeName == "FleetFocused") {
-  //   g_fleetCenterMarker.hide();
-  // }
-  // else {
-  //   g_fleetCenterMarker.show();
-  // }
-}
-
 
 
 
@@ -298,11 +286,10 @@ function initializeDocAndControls() {
   // Setup the Display Modes menu list object
   docDisplayModeList.allowMultiSelection = false;
   docDisplayModeList.onItemSelected = displayModeSelectedHandler;
-  docDisplayModeList.onItemDeselected = displayModeDeselectedHandler;
   docDisplayModeList.addItem(TrackType.NONE, "Aucun", false);
-  docDisplayModeList.addItem(TrackType.CENTERED, "Flotte (centre)", true);
+  docDisplayModeList.addItem(TrackType.CENTERED, "Flotte (centre)", false);
   zoomKludge(true);
-  docDisplayModeList.addItem(TrackType.FOCUSED, "Flotte (focus)", false);
+  docDisplayModeList.addItem(TrackType.FOCUSED, "Flotte (focus)", true);
 
   // Setup the Map menu list object
   docMapNamesList.allowMultiSelection = false;
