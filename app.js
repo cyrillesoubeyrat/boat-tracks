@@ -420,7 +420,7 @@ function initializeMaps() {
     source: new VectorSource({ wrapX: false })
   });
   g_fleetCenterMarker = new ModeMarker();
-  g_fleetCenterMarker.setCircleShape();
+  g_fleetCenterMarker.setSquareShape();
 
   infoLayer.getSource().addFeature(g_fleetCenterMarker.feature);
 
@@ -688,6 +688,7 @@ function startAnimation() {
   g_fleet.isPaused = false;
   // zoomKludge(true);
   if (g_trackFleetMode != TrackType.NONE) g_fleetCenterMarker.show();
+  if (g_trackFleetMode == TrackType.FOCUSED) disableZoomControls();
 
   g_boatsLayer.on('postrender', moveBoats);
   g_baseMap.render();
