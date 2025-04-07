@@ -210,24 +210,24 @@ main {
   box-sizing: content-box;
 }
 
-#map {
+#map-div {
   position: absolute;
   top: 0;
   bottom: 0;
   width: calc(100vw - var(--closed-sidebar-width));
 }
 
-#map .ol-overlaycontainer-stopevent {
+#map-div .ol-overlaycontainer-stopevent {
   display:flex;
   flex-direction: column;
 }
 
-#map .ol-control button {
+#map-div .ol-control button {
   width: var(--icons-width);
   height: var(--icons-width);
 }
 
-#map .ol-zoom {
+#map-div .ol-zoom {
   order: 2;
   background-color: var(--icons-container-background-color);
   left: 0;
@@ -238,7 +238,7 @@ main {
   border-radius: 0px 0px 8px 0px;
 }
 
-#map [class*='ol-zoom-'] {
+#map-div [class*='ol-zoom-'] {
   color: var(--transparent-color);
   outline: none;
   scale: 1.1;
@@ -248,20 +248,20 @@ main {
   padding: 1.2em;
   background-repeat: no-repeat;
 }
-#map .ol-zoom-in {
+#map-div .ol-zoom-in {
   background-image: url('/icons/zoom_in_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
-#map .ol-zoom-out {
+#map-div .ol-zoom-out {
   background-image: url('/icons/zoom_out_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
-#map [class*='ol-zoom-']:hover {
+#map-div [class*='ol-zoom-']:hover {
   background-color: var(--icons-hover-color);
 }
-#map [class*='ol-zoom-'].disabled {
+#map-div [class*='ol-zoom-'].disabled {
   opacity: .2;
 }
 
-#map .ol-full-screen {
+#map-div .ol-full-screen {
   order: 1;
   background-color: var(--icons-container-background-color);
   left: 0;
@@ -270,7 +270,7 @@ main {
   border-radius: 0px 8px 0px 0px;
 }
 
-#map [class*='ol-full-screen-'] {
+#map-div [class*='ol-full-screen-'] {
   outline: none;
   color: var(--transparent-color);
   scale: 1.1;
@@ -281,14 +281,14 @@ main {
   background-repeat: no-repeat;
 }
 
-#map .ol-full-screen-false {
+#map-div .ol-full-screen-false {
   background-image: url('/icons/zoom_out_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
-#map .ol-full-screen-true {
+#map-div .ol-full-screen-true {
     background-image: url('/icons/zoom_in_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
 
-#map [class*='ol-full-screen-']:hover {
+#map-div [class*='ol-full-screen-']:hover {
   background-color: var(--icons-hover-color);
 }
 

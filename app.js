@@ -7,7 +7,7 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from "ol/source/Vector";
 import { Fill, Stroke, Style } from "ol/style";
 import { GeoJSON } from "ol/format";
-import { StadiaMaps } from 'ol/source';
+import { StadiaMaps, TileJSON } from 'ol/source';
 import OSM from 'ol/source/OSM';
 import FullScreen from 'ol/control/FullScreen';
 import { defaults as defaultControls } from 'ol/control/defaults';
@@ -308,8 +308,9 @@ function initializeDocAndControls() {
   docMapNamesList.allowMultiSelection = false;
   docMapNamesList.onItemSelected = mapItemSelectedHandler;
   docMapNamesList.onItemDeselected = mapItemDeselectedHandler;
-  docMapNamesList.addItem("AlidadeSatellite", "Alidade Satellite", true); // Selected item
-  docMapNamesList.addItem("OpenStreetMap", "OpenStreetMap", false);
+  docMapNamesList.addItem("EsriSatellite", "Esri Satellite", true); // Selected item
+  docMapNamesList.addItem("EsriTopo", "Esri World Topo", false);
+  docMapNamesList.addItem("GoogleHybrid", "Google Hybrid", false);
   docMapNamesList.addItem("StamenWatercolor", "Stamen Watercolor", false);
 
 }
@@ -321,7 +322,7 @@ function initializeMaps() {
   // - Only define its view as layers are defined afterwards
   const baseMap = new Map({
     controls: defaultControls().extend([new FullScreen(), g_fleetCtrl]),
-    target: 'map',
+    target: 'map-div',
     view: new View({
       center: [0, 0],
       center: [-1.831527, 46.4713], // coords: Les Sables
@@ -331,10 +332,25 @@ function initializeMaps() {
   g_baseMap = baseMap;
 
   // Define the candidate base map layers:
-  const openStreetMap = new TileLayer({
-    source: new OSM(),
+
+  const esriSatellite = new TileLayer({
+    source: new OSM({
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      attributions:
+      'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' + 'rest/services/World_Topo_Map/MapServer">ArcGIS</a>'
+    }),
     visible: false,
-    title: 'OpenStreetMap'
+    title: 'EsriSatellite'
+  });
+
+  const esriTopo = new TileLayer({
+    source: new OSM({
+      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
+      attributions:
+      'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' + 'rest/services/World_Topo_Map/MapServer">ArcGIS</a>'
+    }),
+    visible: false,
+    title: 'EsriTopo'
   });
 
   const stamenWatercolor = new TileLayer({
@@ -346,13 +362,13 @@ function initializeMaps() {
     title: 'StamenWatercolor'
   });
 
-  const alidadeSatellite = new TileLayer({
-    source: new StadiaMaps({
-      layer: 'alidade_satellite',
-      retina: false
+  const googleHybrid = new TileLayer({
+    source: new OSM({
+      url: 'http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}'
+      // crossOrigin: "anonymous"
     }),
     visible: false,
-    title: 'AlidadeSatellite'
+    title: 'GoogleHybrid'
   });
 
   // Define the layers for the exclusion zone:
@@ -423,7 +439,7 @@ function initializeMaps() {
 
   // Define the layer group
   g_baseLayerGroup = new Group({
-    layers: [alidadeSatellite, openStreetMap, stamenWatercolor, exlusionZonesLayer, whalesZonesLayer, boatsLayer, infoLayer]
+    layers: [esriSatellite, esriTopo, googleHybrid, stamenWatercolor, exlusionZonesLayer, whalesZonesLayer, boatsLayer, infoLayer]
   })
 
   baseMap.addLayer(g_baseLayerGroup)
@@ -513,7 +529,6 @@ function unloadBoats(teamName) {
 }
 
 function loadBoats(teamName) {
-  // let teamPath = './public/data/teams/' + teamName + '.json';
   let teamPath = new URL(`/public/data/teams/${teamName}.json`, import.meta.url).href;
 
   fetch(teamPath)
