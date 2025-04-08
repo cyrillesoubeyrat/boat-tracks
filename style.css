@@ -215,7 +215,7 @@ main {
   top: 0;
   bottom: 0;
   height: 100dvh;
-  width: calc(100vw - var(--closed-sidebar-width));
+  width: calc(100vw - var(--opened-sidebar-width));
 }
 
 #map-div .ol-overlaycontainer-stopevent {
