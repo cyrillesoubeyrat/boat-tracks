@@ -32,7 +32,7 @@ html {
 }
 
 body {
-  min-height: 100dvh;
+  min-height: 100lvh;
   background-color: var(--base-clr);
   color: var(--text-clr);
   display: grid;
@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;  box-sizing: border-box;
-  height: 100dvh;
+  height: 100lvh;
   width: var(--opened-sidebar-width);
   padding: 5px 1em;
   background-color: var(--base-clr);
@@ -154,7 +154,7 @@ for allowing to show and hide them:
   grid-template-rows: 0fr; /* Sub menu hidden*/
   transition: 300ms ease-in-out;
   >div {
-    max-height: 12dvh;
+    max-height: 12lvh;
     overflow: hidden;
   }
 }
@@ -162,7 +162,7 @@ for allowing to show and hide them:
 #sidebar .sub-menu.show {
   grid-template-rows: 1fr; /* Sub menu displayed*/
   >div {
-      max-height: 12dvh;
+      max-height: 12lvh;
       overflow: auto;
     }}
 
@@ -202,8 +202,8 @@ for allowing to show and hide them:
 }
 
 .main {
-  height: 100dvh;
-  width: 100dvh;
+  height: 100lvh;
+  width: 100lvh;
 }
 
 main {
@@ -214,7 +214,7 @@ main {
   position: absolute;
   top: 0;
   bottom: 0;
-  height: 100dvh;
+  height: 100lvh;
   width: calc(100vw - var(--opened-sidebar-width));
 }
 

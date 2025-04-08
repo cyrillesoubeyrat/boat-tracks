@@ -300,6 +300,7 @@ function initializeDocAndControls() {
   docMapNamesList.addItem("GoogleHybrid", "Google Hybrid", false);
   docMapNamesList.addItem("StamenWatercolor", "Stamen Watercolor", false);
 
+  window.matchMedia("(orientation: landscape)").addEventListener("change", resizeMapView);
 }
 
 
@@ -542,17 +543,23 @@ function loadBoats(teamName) {
 
 // function toggleSidebar(){
 window.toggleSidebar = () => {
-  let sideBarIsClosed = docSidebar.classList.toggle('closed');
+  docSidebar.classList.toggle('closed');
   docToggleButton.classList.toggle('rotate');
 
   // Resize map view when folding/unfolding the sidebar:
+  resizeMapView();
+
+  closeAllSubMenus();
+}
+
+window.resizeMapView = () => {
+  let sideBarIsClosed = docSidebar.classList.contains('closed');
   let mapDiv = document.getElementById("map-div");
   let bodyStyle = window.getComputedStyle(document.body);
   let sideBarWidth = bodyStyle.getPropertyValue(sideBarIsClosed ? "--closed-sidebar-width" : "--opened-sidebar-width");
   sideBarWidth = parseInt(sideBarWidth);
-  mapDiv.style.width = (screen.availWidth - sideBarWidth) + "px";
-
-  closeAllSubMenus();
+  // alert("Map width: " + mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "width: " + screen.width);
+  mapDiv.style.width = (window.innerWidth - sideBarWidth) + "px";
 }
 
 window.closeAllSubMenus = () => {
