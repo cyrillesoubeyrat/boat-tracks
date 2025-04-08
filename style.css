@@ -308,20 +308,31 @@ main {
   background-color: var(--icons-hover-color);
 }
 
-@media screen and (min-height: 200px) and (max-height: 767px) and (orientation: landscape) {
+@media screen and (min-height: 200px) and (max-height: 400px) and (orientation: landscape) {
+  /* #map-div .ol-overlaycontainer-stopevent {
+    margin-top: 20px;
+  } */
+
   #map-div [class*='ol-full-screen-'] {
     scale: 1.0;
     padding: 0.3em;
-    }
+  }
+
   #map-div [class*='ol-zoom-'] {
     scale: 1.0;
     padding: 0.3em;
   }
+
+  /* .play-ctrl [class*='play-ctrl-'] {
+      margin-top: 10em;
+    } */
+
   .play-ctrl [class*='play-ctrl-'].show {
+    margin-top: 0px;
     scale: 1.0;
-      padding: 0.3em;
+    padding: 0px;
   }
-   /* #map-div .ol-zoom-in {
+  /* #map-div .ol-zoom-in {
     background-image: url('/icons/zoom_in_12dp_E3E3E3_FILL0_wght400_GRAD0_opsz12.svg');
   } */
 
