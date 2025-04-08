@@ -542,17 +542,24 @@ function loadBoats(teamName) {
 
 // function toggleSidebar(){
 window.toggleSidebar = () => {
-  docSidebar.classList.toggle('closed')
-  docToggleButton.classList.toggle('rotate')
+  let sideBarIsClosed = docSidebar.classList.toggle('closed');
+  docToggleButton.classList.toggle('rotate');
 
-  closeAllSubMenus()
+  // Resize map view when folding/unfolding the sidebar:
+  let mapDiv = document.getElementById("map-div");
+  let bodyStyle = window.getComputedStyle(document.body);
+  let sideBarWidth = bodyStyle.getPropertyValue(sideBarIsClosed ? "--closed-sidebar-width" : "--opened-sidebar-width");
+  sideBarWidth = parseInt(sideBarWidth);
+  mapDiv.style.width = (screen.availWidth - sideBarWidth) + "px";
+
+  closeAllSubMenus();
 }
 
 window.closeAllSubMenus = () => {
   Array.from(docSidebar.getElementsByClassName('sub-menu')).forEach(ul => {
     if (ul.classList.contains("show")) {
-      ul.classList.remove('show')
-      ul.previousElementSibling.classList.remove('rotate')
+      ul.classList.remove('show');
+      ul.previousElementSibling.classList.remove('rotate');
     }
   })
 }
