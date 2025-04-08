@@ -79,7 +79,7 @@ body {
   /* Logo display */
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 16px;
+  /* margin-bottom: 16px; */
 
   .logo {
     font-size: 1.5em;
@@ -331,6 +331,12 @@ main {
     margin-top: 0px;
     scale: 1.0;
     padding: 0px;
+  }
+
+  #sidebar a,
+  #sidebar .dropdown-btn,
+  #sidebar .logo {
+    padding: .55em;
   }
   /* #map-div .ol-zoom-in {
     background-image: url('/icons/zoom_in_12dp_E3E3E3_FILL0_wght400_GRAD0_opsz12.svg');
