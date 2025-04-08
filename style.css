@@ -154,7 +154,7 @@ for allowing to show and hide them:
   grid-template-rows: 0fr; /* Sub menu hidden*/
   transition: 300ms ease-in-out;
   >div {
-    max-height: 12lvh;
+    max-height: 36lvh;
     overflow: hidden;
   }
 }
@@ -162,7 +162,7 @@ for allowing to show and hide them:
 #sidebar .sub-menu.show {
   grid-template-rows: 1fr; /* Sub menu displayed*/
   >div {
-      max-height: 12lvh;
+      max-height: 36lvh;
       overflow: auto;
     }}
 
