@@ -569,7 +569,7 @@ window.resizeMapView = () => {
   }
 
   mapDiv.style.width = (browserWidth - sideBarWidth) + "px";
-  alert("Map width: " +isMobile+ mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "browserWidth: " + browserWidth);
+  // alert("Map width: " +isMobile+ mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "browserWidth: " + browserWidth);
 }
 
 window.closeAllSubMenus = () => {
