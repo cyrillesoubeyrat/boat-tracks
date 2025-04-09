@@ -104,7 +104,7 @@ body {
   color: var(--text-clr);
   display: flex;
   align-items: center;
-  gap: 1.3em;
+  gap: 1.5em;
 }
 
 .dropdown-btn {

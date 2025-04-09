@@ -559,16 +559,17 @@ window.resizeMapView = () => {
   let bodyStyle = window.getComputedStyle(document.body);
   let sideBarWidth = bodyStyle.getPropertyValue(sideBarIsClosed ? "--closed-sidebar-width" : "--opened-sidebar-width");
   let isMobile = /Mobi/.test(window.navigator.userAgent);
+  let isPortrait = window.matchMedia("(orientation: portrait)").matches;
   let browserWidth = window.innerWidth;
   
   sideBarWidth = parseInt(sideBarWidth);
 
-  if (isMobile) {
+  if (isMobile && isPortrait) {
     browserWidth = screen.width; // Mobile device
   }
 
   mapDiv.style.width = (browserWidth - sideBarWidth) + "px";
-  // alert("Map width: " +isMobile+ mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "width: " + screen.width);
+  alert("Map width: " +isMobile+ mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "browserWidth: " + browserWidth);
 }
 
 window.closeAllSubMenus = () => {
