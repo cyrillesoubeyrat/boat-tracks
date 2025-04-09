@@ -300,6 +300,7 @@ function initializeDocAndControls() {
   docMapNamesList.addItem("GoogleHybrid", "Google Hybrid", false);
   docMapNamesList.addItem("StamenWatercolor", "Stamen Watercolor", false);
 
+  window.addEventListener("resize", resizeMapView);
   window.matchMedia("(orientation: landscape)").addEventListener("change", resizeMapView);
 }
 
@@ -557,9 +558,17 @@ window.resizeMapView = () => {
   let mapDiv = document.getElementById("map-div");
   let bodyStyle = window.getComputedStyle(document.body);
   let sideBarWidth = bodyStyle.getPropertyValue(sideBarIsClosed ? "--closed-sidebar-width" : "--opened-sidebar-width");
+  let isMobile = /Mobi/.test(window.navigator.userAgent);
+  let browserWidth = window.innerWidth;
+  
   sideBarWidth = parseInt(sideBarWidth);
-  // alert("Map width: " + mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "width: " + screen.width);
-  mapDiv.style.width = (window.innerWidth - sideBarWidth) + "px";
+
+  if (isMobile) {
+    browserWidth = screen.width; // Mobile device
+  }
+
+  mapDiv.style.width = (browserWidth - sideBarWidth) + "px";
+  // alert("Map width: " +isMobile+ mapDiv.getBoundingClientRect()["width"] + "\n" + "innerWidth: " + window.innerWidth + "\n" + "width: " + screen.width);
 }
 
 window.closeAllSubMenus = () => {
