@@ -518,7 +518,7 @@ function unloadBoats(teamName) {
 }
 
 function loadBoats(teamName) {
-  let teamPath = new URL(`/public/data/teams/${teamName}.json`, import.meta.url).href;
+  let teamPath = new URL(`/data/teams/${teamName}.json`, import.meta.url + "/public").href;
 
   fetch(teamPath)
     .then(res => res.json())
@@ -758,7 +758,7 @@ function parseUrlParameters() {
   if (teamList == null) {
     teamList = "defaultTeamList";
   }
-  let teamListPath = new URL(`/public/data/${teamList}.json`, import.meta.url).href;
+  let teamListPath = new URL(`/data/${teamList}.json`, import.meta.url + "/public").href;
 
   return teamListPath;
 }
