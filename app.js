@@ -519,7 +519,7 @@ function unloadBoats(teamName) {
 
 function loadBoats(teamName) {
   const location = import.meta.url + (import.meta.env.DEV ? "/public" : "");
-  let teamPath = new URL(`/data/teams/${teamName}.json`, location).href;
+  let teamPath = new URL(`../data/teams/${teamName}.json`, location).href;
 
   fetch(teamPath)
     .then(res => res.json())
@@ -761,7 +761,7 @@ function parseUrlParameters() {
   }
 
   const location = import.meta.url + (import.meta.env.DEV ? "/public" : "");
-  let teamListPath = new URL(`/data/${teamList}.json`, location).href;
+  let teamListPath = new URL(`../data/${teamList}.json`, location).href;
 
   return teamListPath;
 }
