@@ -46,14 +46,15 @@ body {
 #sidebar {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;  box-sizing: border-box;
+  justify-content: space-between;
+  box-sizing: border-box;
   height: 100lvh;
   width: var(--opened-sidebar-width);
   padding: 5px 1em;
   background-color: var(--base-clr);
   border-right: 1px solid var(--line-clr);
-
-  position: sticky; /* For anchoring the sidebar regardless of scrolling in main window */
+  position: sticky;
+  /* For anchoring the sidebar regardless of scrolling in main window */
   /* z-index: 1; */
   top: 0;
   align-self: start;
@@ -123,6 +124,7 @@ for allowing to show and hide them:
 #sidebar .dropdown-btn {
   display: none;
 }
+
 #sidebar .dropdown-btn.show {
   display: flex;
 }
@@ -151,8 +153,10 @@ for allowing to show and hide them:
 /* For animating the transition while opening/closing sub menus: */
 #sidebar .sub-menu {
   display: grid;
-  grid-template-rows: 0fr; /* Sub menu hidden*/
+  grid-template-rows: 0fr;
+  /* Sub menu hidden*/
   transition: 300ms ease-in-out;
+
   >div {
     max-height: 36lvh;
     overflow: hidden;
@@ -160,11 +164,16 @@ for allowing to show and hide them:
 }
 
 #sidebar .sub-menu.show {
-  grid-template-rows: 1fr; /* Sub menu displayed*/
+  grid-template-rows: 1fr;
+
+  /* Sub menu displayed*/
   >div {
-      max-height: 36lvh;
-      overflow: auto;
-    }}
+    max-height: 36lvh;
+    overflow: auto;
+    scrollbar-color: rgba(200, 200, 200, 1) rgba(128, 128, 128, 0.1);
+    scrollbar-width: thin;
+  }
+}
 
 #sidebar .bottom-items {
   margin-bottom: 10px;
@@ -176,11 +185,13 @@ for allowing to show and hide them:
 }
 
 .rotate svg:last-child {
-  rotate: 180deg; /* Definition of "rotate" for dropdown icon rotation */
+  rotate: 180deg;
+  /* Definition of "rotate" for dropdown icon rotation */
 }
 
 #sidebar .sub-menu li {
-  padding-left: 2em; /* Indent sub menu items */
+  padding-left: 2em;
+  /* Indent sub menu items */
 }
 
 /* Logo button and open/close navbar */
@@ -219,7 +230,7 @@ main {
 }
 
 #map-div .ol-overlaycontainer-stopevent {
-  display:flex;
+  display: flex;
   flex-direction: column;
 }
 
@@ -249,15 +260,19 @@ main {
   padding: 1.2em;
   background-repeat: no-repeat;
 }
+
 #map-div .ol-zoom-in {
   background-image: url('/icons/zoom_in_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
+
 #map-div .ol-zoom-out {
   background-image: url('/icons/zoom_out_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
+
 #map-div [class*='ol-zoom-']:hover {
   background-color: var(--icons-hover-color);
 }
+
 #map-div [class*='ol-zoom-'].disabled {
   opacity: .2;
 }
@@ -285,8 +300,9 @@ main {
 #map-div .ol-full-screen-false {
   background-image: url('/icons/zoom_out_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
+
 #map-div .ol-full-screen-true {
-    background-image: url('/icons/zoom_in_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
+  background-image: url('/icons/zoom_in_map_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
 }
 
 #map-div [class*='ol-full-screen-']:hover {
@@ -300,7 +316,7 @@ main {
 
 .play-ctrl [class*='play-ctrl-'] {
   outline: none !important;
-  background-color:var(--transparent-color);
+  background-color: var(--transparent-color);
 }
 
 .play-ctrl [class*='play-ctrl-']:hover {
@@ -338,21 +354,4 @@ main {
   #sidebar .logo {
     padding: .55em;
   }
-  /* #map-div .ol-zoom-in {
-    background-image: url('/icons/zoom_in_12dp_E3E3E3_FILL0_wght400_GRAD0_opsz12.svg');
-  } */
-
-  /* #map-div .ol-zoom-out {
-    background-image: url('/icons/zoom_out_24dp_E3E3E3_FILL0_wght400_GRAD0_opsz24.svg');
-    */
-    /*
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    height: 100vw;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    */
-  }
+}
