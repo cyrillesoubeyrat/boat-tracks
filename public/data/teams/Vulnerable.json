@@ -1,6 +1,6 @@
 [
 {"name": "Bibi77-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FF0000",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -2964,7 +2964,7 @@
 "finished": true
 },
 {"name": "JC-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#00FF00",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -5928,7 +5928,7 @@
 "finished": true
 },
 {"name": "Molybsail-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#0000FF",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -8892,7 +8892,7 @@
 "finished": true
 },
 {"name": "Tof22-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FFFF00",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -11856,7 +11856,7 @@
 "finished": true
 },
 {"name": "SC Serenity-BHT / VULNERABLE",
-"color": "#f73636",
+"color": "#00FFFF",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -14820,7 +14820,7 @@
 "finished": true
 },
 {"name": "FF-BHT/VULNERABLE",
-"color": "#373636",
+"color": "#FF00FF",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -17784,7 +17784,7 @@
 "finished": true
 },
 {"name": "Waou22-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FFA500",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -20748,7 +20748,7 @@
 "finished": true
 },
 {"name": " Wacral-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FFC0CB",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -23712,7 +23712,7 @@
 "finished": true
 },
 {"name": "Phipa-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#800080",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -26676,7 +26676,7 @@
 "finished": true
 },
 {"name": "Chu1StBernard-BHT/VULNERABLE",
-"color": "#373636",
+"color": "#A52A2A",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -29640,7 +29640,7 @@
 "finished": true
 },
 {"name": "VivLeSportSA2-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#40E0D0",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -32604,7 +32604,7 @@
 "finished": true
 },
 {"name": "Nicodm-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#F5F5DC",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -35568,7 +35568,7 @@
 "finished": true
 },
 {"name": "Yann@Brest-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#8B0000",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -38532,7 +38532,7 @@
 "finished": true
 },
 {"name": "Julio15-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#008000",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -41496,7 +41496,7 @@
 "finished": true
 },
 {"name": "RV-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#00008B",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -44460,7 +44460,7 @@
 "finished": true
 },
 {"name": "Loick 29-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FFD700",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -47424,7 +47424,7 @@
 "finished": true
 },
 {"name": "Avel-Mad-29-BHT / VULNERABLE",
-"color": "#efe932",
+"color": "#00CED1",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -50388,7 +50388,7 @@
 "finished": true
 },
 {"name": "Joko-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FF69B4",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -53352,7 +53352,7 @@
 "finished": true
 },
 {"name": "Titophe-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#4B0082",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -56316,7 +56316,7 @@
 "finished": true
 },
 {"name": "KRT59-BHT / VULNERABLE",
-"color": "#373636",		
+"color": "#D2691E",		
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -59280,7 +59280,7 @@
 "finished": true
 },
 {"name": "Docdoc-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#7FFFD4",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -62244,7 +62244,7 @@
 "finished": true
 },
 {"name": "Chu1StBernard-BHT/VULNERABLE",
-"color": "#373636",
+"color": "#BDB76B",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -65208,7 +65208,7 @@
 "finished": true
 },
 {"name": "AquilaChrysa-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#DC143C",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -68172,7 +68172,7 @@
 "finished": true
 },
 {"name": "Asthojuma-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#006400",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -71136,7 +71136,7 @@
 "finished": true
 },
 {"name": "Panet-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#1E90FF",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -74100,7 +74100,7 @@
 "finished": true
 },
 {"name": "Bass-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#B22222",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -77064,7 +77064,7 @@
 "finished": true
 },
 {"name": "Juljul - BHT / VULNERABLE",
-"color": "#373636",
+"color": "#ADFF2F",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -80028,7 +80028,7 @@
 "finished": true
 },
 {"name": "BroDreger-BHT / VULNERABLE",
-"color": "#a0a0a5",
+"color": "#7B68EE",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -82992,7 +82992,7 @@
 "finished": true
 },
 {"name": "LBQB-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#CD5C5C",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -85956,7 +85956,7 @@
 "finished": true
 },
 {"name": "Extreme06-BHT / VULNERABLE ",
-"color": "#373636",
+"color": "#8FBC8F",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -88920,7 +88920,7 @@
  "finished": true
 },
 {"name": "GuiGui-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#4682B4",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -91884,7 +91884,7 @@
 "finished": true
 },
 {"name": "nicobélix-BHT/VULNÉRABLE ",
-"color": "#161616",
+"color": "#FF8C00",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -94848,7 +94848,7 @@
 "finished": true
 },
 {"name": "Paddi_Zan-BHT/VULNERABLE",
-"color": "#373636",
+"color": "#DAA520",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -97812,7 +97812,7 @@
 "finished": true
 },
 {"name": "V'là le 22-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#20B2AA",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -100776,7 +100776,7 @@
 "finished": true
 },
 {"name": "Busso-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#9932CC",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -103740,7 +103740,7 @@
 "finished": true
 },
 {"name": "Darius-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#556B2F",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -106704,7 +106704,7 @@
 "finished": true
 },
 {"name": "Lavida65-BHT/ VULNERABLE",
-"color": "#373636",
+"color": "#6495ED",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -109674,7 +109674,7 @@
 "finished": true
 },
 {"name": "G3M-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#E9967A",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -112644,7 +112644,7 @@
 "finished": true
 },
 {"name": "Sernine-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#32CD32",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -115614,7 +115614,7 @@
 "finished": true
 },
 {"name": "Philae-78-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#9370DB",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -118584,7 +118584,7 @@
 "finished": true
 },
 {"name": "CA21-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#3CB371",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -121554,7 +121554,7 @@
 "finished": true
 },
 {"name": "XChab-BHT / VULNERABLE",
-"color": "#a0a0a5",
+"color": "#8A2BE2",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -124524,7 +124524,7 @@
 "finished": true
 },
 {"name": "EnezGwenn-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#2E8B57",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -127494,7 +127494,7 @@
 "finished": true
 },
 {"name": "PhilBreizh-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#DDA0DD",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -130464,7 +130464,7 @@
 "finished": true
 },
 {"name": "bretyvon22-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#FF4500",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -133434,7 +133434,7 @@
 "finished": true
 },
 {"name": "Loumi-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#4169E1",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -136404,7 +136404,7 @@
 "finished": true
 },
 {"name": "DavyJones-BHT/VULNERABLE",
-"color": "#373636",
+"color": "#C71585",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -139374,7 +139374,7 @@
 "finished": true
 },
 {"name": "Benja-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#66CDAA",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -142344,7 +142344,7 @@
 "finished": true
 },
 {"name": "OLI'KA-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#BA55D3",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -145314,7 +145314,7 @@
 "finished": true
 },
 {"name": "NARSIL-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#48D1CC",
 "trace": [
 	{
 		"ts": 1731240120000,
@@ -148290,7 +148290,7 @@
 "finished": true
 },
 {"name": "Yvesko-BHT / VULNERABLE",
-"color": "#373636",
+"color": "#BA55D3",
 "trace": [
 	{
 		"ts": 1731240120000,
